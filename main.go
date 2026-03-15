@@ -1,6 +1,7 @@
 package main
 
 import (
+	_ "embed"
 	"fmt"
 	"io"
 	"log"
@@ -10,6 +11,9 @@ import (
 	"strings"
 	"time"
 )
+
+//go:embed favicon.ico
+var favicon []byte
 
 func main() {
 	port := os.Getenv("PORT")
@@ -37,6 +41,17 @@ func main() {
 	}
 
 	mux := http.NewServeMux()
+
+	mux.HandleFunc("GET /{$}", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "text/html")
+		fmt.Fprint(w, `<!DOCTYPE html><html><head><link rel="icon" href="/favicon.ico"><title>u</title></head><body><pre>u - file upload service</pre></body></html>`)
+	})
+
+	mux.HandleFunc("GET /favicon.ico", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "image/x-icon")
+		w.Header().Set("Cache-Control", "public, max-age=604800")
+		w.Write(favicon)
+	})
 
 	mux.HandleFunc("POST /upload", func(w http.ResponseWriter, r *http.Request) {
 		// Auth check
