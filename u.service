@@ -1,0 +1,20 @@
+[Unit]
+Description=u - personal file upload service
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/opt/u
+ExecStart=/opt/u/u
+Restart=on-failure
+RestartSec=5
+
+Environment=PORT=8080
+Environment=UPLOAD_DIR=/var/www/uploads
+Environment=BASE_URL=https://u.fftp.io
+EnvironmentFile=/etc/u.env
+
+[Install]
+WantedBy=multi-user.target

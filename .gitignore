@@ -1,0 +1,22 @@
+# Compiled binary
+u
+*.exe
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*~
+
+# Environment / secrets
+.env
+go vet is still running — it's likely doing a first-time build cache warm. Let me wait a bit longer.
+
+Waiting for command completion (up to 60 seconds)
+go vet is still running — it's likely doing a first-time build cache warm. Let me wait a bit longer.
+
+Waiting for command completion (up to 60 seconds)
