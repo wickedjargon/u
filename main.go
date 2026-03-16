@@ -44,7 +44,7 @@ func main() {
 
 	mux.HandleFunc("GET /{$}", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/html")
-		fmt.Fprint(w, `<!DOCTYPE html><html><head><link rel="icon" href="/favicon.ico"><title>u</title></head><body><pre>u - file upload service</pre></body></html>`)
+		fmt.Fprint(w, `<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.ico"><title>u</title><style>body{margin:2em;font-family:monospace}@media(prefers-color-scheme:dark){html{background:#111;color:#eee}}</style></head><body><pre>u - file upload service</pre></body></html>`)
 	})
 
 	mux.HandleFunc("GET /favicon.ico", func(w http.ResponseWriter, r *http.Request) {
