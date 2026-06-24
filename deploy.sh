@@ -14,7 +14,8 @@ echo "==> Uploading binary and configs..."
 scp u u.service u.fftp.io.nginx "$HOST":/tmp/
 
 echo "==> Setting up on server..."
-ssh "$HOST" bash -s <<'REMOTE'
+# Run the remote setup as root via sudo (the deploy user has passwordless sudo).
+ssh "$HOST" sudo bash -s <<'REMOTE'
 set -euo pipefail
 
 # Create directories
