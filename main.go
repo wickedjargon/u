@@ -103,16 +103,22 @@ func main() {
 			}
 		}
 
-		// Save file
-		dst, err := os.Create(destPath)
+		// Read the upload into memory (already bounded by ParseMultipartForm).
+		data, err := io.ReadAll(file)
 		if err != nil {
-			http.Error(w, "failed to save file", http.StatusInternalServerError)
+			http.Error(w, "failed to read file", http.StatusInternalServerError)
 			return
 		}
-		defer dst.Close()
 
-		if _, err := io.Copy(dst, file); err != nil {
-			http.Error(w, "failed to write file", http.StatusInternalServerError)
+		// Strip geotags and stamp every photo with Pyongyang, unless the client
+		// explicitly opts out.
+		if r.FormValue("keep_exif") != "true" {
+			data = trollExif(data)
+		}
+
+		// Save file
+		if err := os.WriteFile(destPath, data, 0644); err != nil {
+			http.Error(w, "failed to save file", http.StatusInternalServerError)
 			return
 		}
 
